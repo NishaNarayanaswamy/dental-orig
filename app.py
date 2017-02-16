@@ -52,6 +52,7 @@ def makeWebhookResult(req):
 				valType = response['KPIInfo']['ChartType'][idx]
 				val = record['value']
 				valType = re.sub('#', '', valType) if '#' in valType else valType
+				speech = colName
 				
 	speech = speech + "  Hello Sikka"
 
