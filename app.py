@@ -50,7 +50,7 @@ def makeWebhookResult(req):
 			if(response['KPIData']):
 				speech = "Read morning report..."
 		elif req.get("result").get("action") == 'appointments':
-			url3  = ''https://api.sikkasoft.com/v2/appointments?request_key='+request_key+'&startdate='+today+'&enddate='+today+'&sort_order=asc&sort_by=appointment_time&fields=patient_name,time,type,guarantor_name,length'
+			url3  = 'https://api.sikkasoft.com/v2/appointments?request_key='+request_key+'&startdate='+today+'&enddate='+today+'&sort_order=asc&sort_by=appointment_time&fields=patient_name,time,type,guarantor_name,length'
 			html3 = urlopen(url3)
         		response = json.load(html3)
 			if(response):
