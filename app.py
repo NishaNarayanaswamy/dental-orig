@@ -46,22 +46,22 @@ def makeWebhookResult(req):
 		html2 = urlopen(url2)
         	response = json.load(html2)
 		if(response['KPIData']):
-                for idx, record in enumerate(response['KPIData'][0]['Value']):
-			colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
-			colName = re.sub(r'# of|#', 'Number of', colName) if '#' in colName else colName
-			colName = re.sub(r'Sch ', 'Scheduled ', colName) if 'Sch' in colName else colName
-			colName = re.sub(r'patient ', 'patients ', colName, re.I)
-			colName = re.sub(r'appointment ', 'appointments ', colName, re.I)
-			valType = re.sub('#', '', valType) if '#' in valType else valType
-			if valType == "$":
-				val=int(math.ceil(val))
-			if 'month' in colName.lower():
-				colName = re.sub( r'month to date', '', colName, flags=re.I )
-				monthCardData.append([colName.strip().capitalize(), valType, val])
-			else:
-				colName = re.sub( r'todays', '', colName, flags=re.I )
-				todayCardData.append([colName.strip().capitalize(), valType, val])
-		speech = "inside morning report loop " + todayCardData + " " + monthCardData
+			for idx, record in enumerate(response['KPIData'][0]['Value']):
+				colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
+				colName = re.sub(r'# of|#', 'Number of', colName) if '#' in colName else colName
+				colName = re.sub(r'Sch ', 'Scheduled ', colName) if 'Sch' in colName else colName
+				colName = re.sub(r'patient ', 'patients ', colName, re.I)
+				colName = re.sub(r'appointment ', 'appointments ', colName, re.I)
+				valType = re.sub('#', '', valType) if '#' in valType else valType
+				if valType == "$":
+					val=int(math.ceil(val))
+				if 'month' in colName.lower():
+					colName = re.sub( r'month to date', '', colName, flags=re.I )
+					monthCardData.append([colName.strip().capitalize(), valType, val])
+				else:
+					colName = re.sub( r'todays', '', colName, flags=re.I )
+					todayCardData.append([colName.strip().capitalize(), valType, val])
+			speech = "inside morning report loop " + todayCardData + " " + monthCardData
 	
 	speech = speech + "Hello Sikka"
 
