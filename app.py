@@ -49,10 +49,6 @@ def makeWebhookResult(req):
 		if(response['KPIData']):
 			for idx, record in enumerate(response['KPIData'][0]['Value']):
 				colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
-				colName = re.sub(r'# of|#', 'Number of', colName) if '#' in colName else colName
-				colName = re.sub(r'Sch ', 'Scheduled ', colName) if 'Sch' in colName else colName
-				colName = re.sub(r'patient ', 'patients ', colName, re.I)
-				colName = re.sub(r'appointment ', 'appointments ', colName, re.I)
 				valType = re.sub('#', '', valType) if '#' in valType else valType
 				speech = colName + valType
 				
