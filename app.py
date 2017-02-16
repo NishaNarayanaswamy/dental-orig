@@ -26,7 +26,15 @@ def webhook():
 	return r
 
 def makeWebhookResult(req):
-	
+		
+	login_url= 'https://api.sikkasoft.com/auth/v2/provider_accounts?un=ddemo2&pw=$Sikka4040&app_id=cf345eef7cb42a39cff6972d57fe6149&app_key=8003044355153fe930ec82ca091e334e&encrypted=false&device_id=fOinX6aGKzc:APA91bHer7V6YQM5re379jNRlc4fnXBmo3ElTB0ivPgINJ76HURuabkzKXmXFZ2ITk9yBFHHDu3dCbq2s8RcuDhWdqyC8BYSAdajjp8ep3TaC_T8k4dHZJZJ-cDeH0NU6ZRjOY1O6ljb&device_type=android'
+    
+	html = urlopen(login_url)
+	login_response = json.load(html)
+	request_key = login_response['profiles'][0]['request_key']
+	session['request_key'] = request_key
+	domain = login_response['profiles'][0]['profile_type']
+
 	speech = "hello Sikka"
 
 	return {
@@ -34,6 +42,7 @@ def makeWebhookResult(req):
 	 	"displayText":speech,
 	 	"source":"apiai-dental"
 	 }
+
 
 if __name__ == '__main__':
 	port = int(os.getenv('PORT', 5000)) # flask is on 5000
