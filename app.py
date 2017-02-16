@@ -47,7 +47,7 @@ def makeWebhookResult(req):
 		html2 = urlopen(url2)
         	response = json.load(html2)
 		if(response['KPIData']):
-			speech = str( response['KPIData'][0]['Value'] )
+			speech = "Read morning report..."
 
 	return {
 	 	"speech":speech,
