@@ -45,7 +45,23 @@ def makeWebhookResult(req):
 		url2  = 'https://api.sikkasoft.com/v2/sikkanet_cards/Morning%20Report?request_key='+request_key+'&startdate='+today+'&enddate='+today
 		html2 = urlopen(url2)
         	response = json.load(html2)
-		speech = "inside morning report loop"
+		if(response['KPIData']):
+                for idx, record in enumerate(response['KPIData'][0]['Value']):
+			colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
+			colName = re.sub(r'# of|#', 'Number of', colName) if '#' in colName else colName
+			colName = re.sub(r'Sch ', 'Scheduled ', colName) if 'Sch' in colName else colName
+			colName = re.sub(r'patient ', 'patients ', colName, re.I)
+			colName = re.sub(r'appointment ', 'appointments ', colName, re.I)
+			valType = re.sub('#', '', valType) if '#' in valType else valType
+			if valType == "$":
+				val=int(math.ceil(val))
+			if 'month' in colName.lower():
+				colName = re.sub( r'month to date', '', colName, flags=re.I )
+				monthCardData.append([colName.strip().capitalize(), valType, val])
+			else:
+				colName = re.sub( r'todays', '', colName, flags=re.I )
+				todayCardData.append([colName.strip().capitalize(), valType, val])
+		speech = "inside morning report loop " + todayCardData + " " + monthCardData
 	
 	speech = speech + "Hello Sikka"
 
@@ -55,12 +71,10 @@ def makeWebhookResult(req):
 	 	"source":"apiai-dental"
 	 }
 
-
 if __name__ == '__main__':
 	port = int(os.getenv('PORT', 5000)) # flask is on 5000
 
 	print "Starting app om port %d", port
 	
 	app.run(debug=True, port=port, host='0.0.0.0')
-
 	
