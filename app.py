@@ -46,18 +46,7 @@ def makeWebhookResult(req):
 		url2  = 'https://api.sikkasoft.com/v2/sikkanet_cards/Morning%20Report?request_key='+request_key+'&startdate='+today+'&enddate='+today
 		html2 = urlopen(url2)
         	response = json.load(html2)
-		if(response['KPIData']):
-			for idx, record in enumerate(response['KPIData'][0]['Value']):
-				colName = record['ColName']
-				valType = response['KPIInfo']['ChartType'][idx]
-				val = record['value']
-				valType = re.sub('#', '', valType) if '#' in valType else valType
-				if 'month' in colName.lower():
-					monthCardData.append([colName, valType, val])
-				else:
-					todayCardData.append([colName, valType, val])
-			
-	speech = speech + "  Hello Sikka"
+		speech = response['KPIData'][0]['Value']['ColName']
 
 	return {
 	 	"speech":speech,
