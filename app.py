@@ -25,11 +25,11 @@ def webhook():
 	return r
 
 def makeWebhookResult(req):
-	if req.get("result").get("action") != 'shipping.cost':
-		return {}
-	result = req.get("result")
-	parameters = result.get("parameters")
-	zone = parameters.get("shipping-zone")
+	#if req.get("result").get("action") != 'shipping.cost':
+	#	return {}
+	#result = req.get("result")
+	#parameters = result.get("parameters")
+	#zone = parameters.get("shipping-zone")
 
 	# login to PM dental
 	login_url= 'https://api.sikkasoft.com/auth/v2/provider_accounts?un=ddemo2&pw=$Sikka4040&app_id=cf345eef7cb42a39cff6972d57fe6149&app_key=8003044355153fe930ec82ca091e334e&encrypted=false&device_id=fOinX6aGKzc:APA91bHer7V6YQM5re379jNRlc4fnXBmo3ElTB0ivPgINJ76HURuabkzKXmXFZ2ITk9yBFHHDu3dCbq2s8RcuDhWdqyC8BYSAdajjp8ep3TaC_T8k4dHZJZJ-cDeH0NU6ZRjOY1O6ljb&device_type=android'
@@ -45,10 +45,10 @@ def makeWebhookResult(req):
 	except:
 		print("login failed")
 
-    # define dictionary/database for cost
-	cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
+    	# define dictionary/database for cost
+	#cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
 
-	speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros. Request key is " + request_key
+	speech = "Request key is " + request_key
 
 	#print("Response:")
 	#print(speech)
@@ -56,7 +56,7 @@ def makeWebhookResult(req):
 	return {
 	 	"speech":speech,
 	 	"displayText":speech,
-	 	"source":"apiai-onlinestore-shipping"
+	 	"source":"apiai-dental"
 	 }
 
 if __name__ == '__main__':
