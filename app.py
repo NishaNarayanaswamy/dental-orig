@@ -53,8 +53,9 @@ def makeWebhookResult(req):
 				val = record['value']
 				valType = re.sub('#', '', valType) if '#' in valType else valType
 				if 'month' in colName.lower():
-					colName = re.sub( r'month to date', '', colName, flags=re.I )
 					monthCardData.append([colName.strip(), valType, val])
+				else:
+					todayCardData.append([colName.strip(), valType, val])
 				speech = " morn report " 
 				
 	speech = speech + "  Hello Sikka"
