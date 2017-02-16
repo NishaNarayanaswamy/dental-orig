@@ -54,7 +54,7 @@ def makeWebhookResult(req):
 				colName = re.sub(r'patient ', 'patients ', colName, re.I)
 				colName = re.sub(r'appointment ', 'appointments ', colName, re.I)
 				valType = re.sub('#', '', valType) if '#' in valType else valType
-				speech = " morn report "
+				speech = colName + valType
 				
 	speech = speech + "  Hello Sikka"
 
