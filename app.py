@@ -25,20 +25,20 @@ def webhook():
 	return r
 
 def makeWebhookResult(req):
-	if req.get("result").get("action") != 'shipping.cost':
-		return {}
-	result = req.get("result")
-	parameters = result.get("parameters")
-	zone = parameters.get("shipping-zone")
+	#if req.get("result").get("action") != 'shipping.cost':
+	#	return {}
+	#result = req.get("result")
+	#parameters = result.get("parameters")
+	#zone = parameters.get("shipping-zone")
 
 	# define dictionary/database for cost
-	cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
+	#cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
 
 	#speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros."
-	speech = "hahaha blah"
+	speech = "blah connected"
 
-	print("Response:")
-	print(speech)
+	#print("Response:")
+	#print(speech)
 
 	return {
 	 	"speech":speech,
