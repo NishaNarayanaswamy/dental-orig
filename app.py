@@ -46,7 +46,7 @@ def makeWebhookResult(req):
 		url2  = 'https://api.sikkasoft.com/v2/sikkanet_cards/Morning%20Report?request_key='+request_key+'&startdate='+today+'&enddate='+today
 		html2 = urlopen(url2)
         	response = json.load(html2)
-		speech = response['KPIData'][0]['Value']['ColName']
+		speech = str( response['KPIData'][0]['Value']['ColName] )
 
 	return {
 	 	"speech":speech,
