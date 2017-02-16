@@ -32,7 +32,7 @@ def makeWebhookResult(req):
 	login_response = json.load(html)
 	request_key = login_response['profiles'][0]['request_key']
 	domain = login_response['profiles'][0]['profile_type']
-	speech = "hello Sikka"
+	speech = "hello Sikka " + request_key + " domain " + domain
 
 	return {
 	 	"speech":speech,
