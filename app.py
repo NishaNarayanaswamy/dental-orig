@@ -43,11 +43,18 @@ def makeWebhookResult(req):
 	# get morning report
 	today = ( datetime.datetime.utcnow() - datetime.timedelta(hours = 8) ).strftime("%Y/%m/%d")
 	if(request_key):
-		url2  = 'https://api.sikkasoft.com/v2/sikkanet_cards/Morning%20Report?request_key='+request_key+'&startdate='+today+'&enddate='+today
-		html2 = urlopen(url2)
-        	response = json.load(html2)
-		if(response['KPIData']):
-			speech = "Read morning report..."
+		if req.get("result").get("action") == 'morning_report':
+			url2  = 'https://api.sikkasoft.com/v2/sikkanet_cards/Morning%20Report?request_key='+request_key+'&startdate='+today+'&enddate='+today
+			html2 = urlopen(url2)
+        		response = json.load(html2)
+			if(response['KPIData']):
+				speech = "Read morning report..."
+		elif req.get("result").get("action") == 'appointments':
+			url3  = ''https://api.sikkasoft.com/v2/appointments?request_key='+request_key+'&startdate='+today+'&enddate='+today+'&sort_order=asc&sort_by=appointment_time&fields=patient_name,time,type,guarantor_name,length'
+			html3 = urlopen(url3)
+        		response = json.load(html3)
+			if(response):
+				speech = "Read schedule card..."
 
 	return {
 	 	"speech":speech,
