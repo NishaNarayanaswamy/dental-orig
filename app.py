@@ -48,9 +48,10 @@ def makeWebhookResult(req):
         	response = json.load(html2)
 		if(response['KPIData']):
 			for idx, record in enumerate(response['KPIData'][0]['Value']):
-				colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
+				colName = record['ColName']
+				valType = response['KPIInfo']['ChartType'][idx]
+				val = record['value']
 				valType = re.sub('#', '', valType) if '#' in valType else valType
-				speech = colName + valType
 				
 	speech = speech + "  Hello Sikka"
 
