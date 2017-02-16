@@ -3,5 +3,10 @@
   "description": "API.AI Shipping Costs Webhook Sapmple",
   "repository": "https://github.com/NishaNarayanaswamy/shipping-costs-sample-nis",
   "logo": "http://xvir.github.io/img/apiai.png",
-  "keywords": ["api.ai", "natural language"]
+  "keywords": ["api.ai", "natural language"],
+  "buildpacks": [
+    {
+      "url": "https://github.com/stomita/heroku-buildpack-python"
+    }
+  ]
 }
