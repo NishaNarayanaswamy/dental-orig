@@ -25,9 +25,9 @@ def webhook():
 	return r
 
 def makeWebhookResult(req):
-	#if req.get("result").get("action") != 'shipping.cost':
-	#	return {}
-	#result = req.get("result")
+	if req.get("result").get("action") != 'morning_report':
+		return {}
+	result = req.get("result")
 	#parameters = result.get("parameters")
 	#zone = parameters.get("shipping-zone")
 
@@ -65,5 +65,3 @@ if __name__ == '__main__':
 	print "Starting app om port %d", port
 	
 	app.run(debug=True, port=port, host='0.0.0.0')
-
-	
