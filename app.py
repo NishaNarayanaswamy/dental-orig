@@ -1,7 +1,8 @@
 import urllib
 import json
 import os
-
+import urllib2
+from urllib2 import urlopen
 from flask import Flask
 from flask import request
 from flask import make_response
@@ -27,23 +28,22 @@ def webhook():
 def makeWebhookResult(req):
 	#if req.get("result").get("action") != 'morning_report':
 	#	return {}
+	
 	result = req.get("result")
+	
 	#parameters = result.get("parameters")
 	#zone = parameters.get("shipping-zone")
 
 	# login to PM dental
 	login_url= 'https://api.sikkasoft.com/auth/v2/provider_accounts?un=ddemo2&pw=$Sikka4040&app_id=cf345eef7cb42a39cff6972d57fe6149&app_key=8003044355153fe930ec82ca091e334e&encrypted=false&device_id=fOinX6aGKzc:APA91bHer7V6YQM5re379jNRlc4fnXBmo3ElTB0ivPgINJ76HURuabkzKXmXFZ2ITk9yBFHHDu3dCbq2s8RcuDhWdqyC8BYSAdajjp8ep3TaC_T8k4dHZJZJ-cDeH0NU6ZRjOY1O6ljb&device_type=android'
 
-	try:
-		html = urlopen(login_url)
-		login_response = json.load(html)
-		request_key = login_response['profiles'][0]['request_key']
-		session['request_key'] = request_key
-		domain = login_response['profiles'][0]['profile_type']
-		print request_key
-		print domain
-	except:
-		print("login failed")
+	html = urlopen(login_url)
+	login_response = json.load(html)
+	request_key = login_response['profiles'][0]['request_key']
+	session['request_key'] = request_key
+	domain = login_response['profiles'][0]['profile_type']
+	print request_key
+	print domain
 
     	# define dictionary/database for cost
 	#cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
@@ -65,3 +65,5 @@ if __name__ == '__main__':
 	print "Starting app om port %d", port
 	
 	app.run(debug=True, port=port, host='0.0.0.0')
+
+	
