@@ -47,6 +47,7 @@ def makeWebhookResult(req):
 		html2 = urlopen(url2)
         	response = json.load(html2)
 		if(response['KPIData']):
+			speech = " morn report "
 			for idx, record in enumerate(response['KPIData'][0]['Value']):
 				colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
 				colName = re.sub(r'# of|#', 'Number of', colName) if '#' in colName else colName
@@ -62,7 +63,6 @@ def makeWebhookResult(req):
 				else:
 					colName = re.sub( r'todays', '', colName, flags=re.I )
                         		todayCardData.append([colName.strip().capitalize(), valType, val])
-			speech = " morn report "
 	speech = speech + "  Hello Sikka"
 
 	return {
