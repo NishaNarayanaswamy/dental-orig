@@ -32,14 +32,14 @@ def makeWebhookResult(req):
 	zone = parameters.get("shipping-zone")
 
 	# define dictionary/database for cost
-	 cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
+	cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
 
-	 speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros."
+	speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros."
 
-	 print("Response:")
-	 print(speech)
+	print("Response:")
+	print(speech)
 
-	 return {
+	return {
 	 	"speech":speech,
 	 	"displayText":speech,
 	 	"source":"apiai-onlinestore-shipping"
@@ -48,7 +48,8 @@ def makeWebhookResult(req):
 if __name__ == '__main__':
 	port = int(os.getenv('PORT', 5000)) # flask is on 5000
 
-	print "Starting app om port %d", % port
-
+	print "Starting app om port %d", port
+	
 	app.run(debug=True, port=port, host='0.0.0.0')
+
 	
