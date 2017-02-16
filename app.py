@@ -52,7 +52,10 @@ def makeWebhookResult(req):
 				valType = response['KPIInfo']['ChartType'][idx]
 				val = record['value']
 				valType = re.sub('#', '', valType) if '#' in valType else valType
-				speech = colName
+				if 'month' in colName.lower():
+					colName = re.sub( r'month to date', '', colName, flags=re.I )
+					monthCardData.append([colName.strip(), valType, val])
+				speech = " morn report " 
 				
 	speech = speech + "  Hello Sikka"
 
