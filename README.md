@@ -1,2 +1,2 @@
-#How to Provide Replies about Dental Google Home app  via Api.ai Webhook
+ #Dental Google Home app via Api.ai Webhook
 
