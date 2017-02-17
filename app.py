@@ -56,9 +56,15 @@ def makeWebhookResult(req):
 			html3 = urlopen(url3)
         		response = json.load(html3)
 			if(response):
+				current_time = (datetime.datetime.utcnow() - datetime.timedelta(hours = 8)).strftime('%H:%M:%S')
+				current_time = datetime.datetime.strptime(current_time, '%H:%M:%S')
 				total_apmnt = response[0]['total_count']
 				if (int(total_apmnt) > 0):
-					speech = "Read schedule card..." + total_apmnt
+					first_apmnt = response[0]['items'][1]['time']
+					first_apmnt = datetime.datetime.strptime(first_apmnt, "%H:%M")
+					last_apmnt = response[0]['items'][int(total_apmnt)-1]['time']
+					last_apmnt = datetime.datetime.strptime(last_apmnt, "%H:%M")
+					speech = "Read schedule card..." str(current_time) + " " + str(first_apmnt) + " " + str(last_apmnt)
 
 	return {
 	 	"speech":speech,
