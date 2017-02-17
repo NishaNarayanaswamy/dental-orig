@@ -56,6 +56,10 @@ def makeWebhookResult(req):
 			html3 = urlopen(url3)
         		response = json.load(html3)
 			if(response):
+				index = 1
+				count = 0
+				first = 0
+				patient_name = ""
 				current_time = (datetime.datetime.utcnow() - datetime.timedelta(hours = 8)).strftime('%H:%M:%S')
 				current_time = datetime.datetime.strptime(current_time, '%H:%M:%S')
 				total_apmnt = response[0]['total_count']
@@ -73,6 +77,8 @@ def makeWebhookResult(req):
 							speech = "You have no appointments for the day."
 						else:
 							while(index  < int(total_apmnt) ):
+								apmnt = response[0]['items'][index]['time']
+								apmnt = datetime.datetime.strptime(apmnt, "%H:%M") 
 								speech = "Read schedule card..."
 
 	return {
