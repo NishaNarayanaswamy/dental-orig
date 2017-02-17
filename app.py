@@ -56,7 +56,9 @@ def makeWebhookResult(req):
 			html3 = urlopen(url3)
         		response = json.load(html3)
 			if(response):
-				speech = "Read schedule card..."
+				total_apmnt = response[0]['total_count']
+				if (int(total_apmnt) > 0):
+					speech = "Read schedule card..." + total_apmnt
 
 	return {
 	 	"speech":speech,
