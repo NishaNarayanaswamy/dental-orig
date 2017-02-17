@@ -42,8 +42,10 @@ def makeWebhookResult(req):
 	
 	speech = ""
 	
-	# get morning report
+	# get api data
 	today = ( datetime.datetime.utcnow() - datetime.timedelta(hours = 8) ).strftime("%Y/%m/%d")
+	todayCardData = []
+	monthCardData = []
 	if(request_key):
 		if req.get("result").get("action") == 'morning_report':
 			url2  = 'https://api.sikkasoft.com/v2/sikkanet_cards/Morning%20Report?request_key='+request_key+'&startdate='+today+'&enddate='+today
@@ -52,8 +54,16 @@ def makeWebhookResult(req):
 			if(response['KPIData']):
 				for idx, record in enumerate(response['KPIData'][0]['Value']):
 					colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
-					speech = "Read morning report..."
-				
+					valType = re.sub('#', '', valType) if '#' in valType else valType
+					if valType == "$":
+						val=int(math.ceil(val))
+					if 'month' in colName.lower():
+						monthCardData.append([colName.strip().capitalize(), valType, val])
+					else:
+						todayCardData.append([colName.strip().capitalize(), valType, val])
+				if monthCardData:
+					speech = 'Your current month to date morning report is as follows...'+ ".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in monthCardData] )
+		
 		elif req.get("result").get("action") == 'appointments':
 			url3  = 'https://api.sikkasoft.com/v2/appointments?request_key='+request_key+'&startdate='+today+'&enddate='+today+'&sort_order=asc&sort_by=appointment_time&fields=patient_name,time,type,guarantor_name,length'
 			html3 = urlopen(url3)
