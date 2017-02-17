@@ -64,7 +64,7 @@ def makeWebhookResult(req):
 					first_apmnt = datetime.datetime.strptime(first_apmnt, "%H:%M")
 					last_apmnt = response[0]['items'][int(total_apmnt)-1]['time']
 					last_apmnt = datetime.datetime.strptime(last_apmnt, "%H:%M")
-					speech = "Read schedule card..." str(current_time) + " " + str(first_apmnt) + " " + str(last_apmnt)
+					speech = "Read schedule card..." + str(current_time) + " " + str(first_apmnt) + " " + str(last_apmnt)
 
 	return {
 	 	"speech":speech,
