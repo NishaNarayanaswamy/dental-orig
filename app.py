@@ -64,7 +64,16 @@ def makeWebhookResult(req):
 					first_apmnt = datetime.datetime.strptime(first_apmnt, "%H:%M")
 					last_apmnt = response[0]['items'][int(total_apmnt)-1]['time']
 					last_apmnt = datetime.datetime.strptime(last_apmnt, "%H:%M")
-					speech = "Read schedule card..." + str(current_time) + " " + str(first_apmnt) + " " + str(last_apmnt)
+					if  current_time < first_apmnt:
+						first_apmnt = first_apmnt.strftime("%I:%M %p")
+						patient_name = response[0]['items'][1]['patient_name']
+						speech = "Today you have "+str(total_apmnt)+" appointments. Your first patient, " + patient_name +"... will arrive at "+first_apmnt+" and your last appointment is at " + last_apmnt.strftime("%I:%M %p")+"."
+					else:
+						if(current_time > last_apmnt ):
+							speech = "You have no appointments for the day."
+						else:
+							while(index  < int(total_apmnt) ):
+								speech = "Read schedule card..."
 
 	return {
 	 	"speech":speech,
