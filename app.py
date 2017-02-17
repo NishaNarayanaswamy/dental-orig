@@ -62,8 +62,8 @@ def makeWebhookResult(req):
 					else:
 						todayCardData.append([colName.strip().capitalize(), valType, val])
 				if monthCardData:
-					speech = 'Your current month to date morning report is as follows...'+ ".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in monthCardData] )
-		
+					speech = 'Your current month to date morning report is as follows...'+'\n' + ". \n".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in monthCardData] )
+				
 		elif req.get("result").get("action") == 'appointments':
 			url3  = 'https://api.sikkasoft.com/v2/appointments?request_key='+request_key+'&startdate='+today+'&enddate='+today+'&sort_order=asc&sort_by=appointment_time&fields=patient_name,time,type,guarantor_name,length'
 			html3 = urlopen(url3)
