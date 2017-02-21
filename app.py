@@ -11,6 +11,10 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
+from rq import Queue
+from worker import conn
+q = Queue(connection=conn)
+
 # start app in global layout
 app = Flask(__name__)
 
@@ -21,7 +25,8 @@ def webhook():
 	print('Request:')
 	print(json.dumps(req, indent=4))
 
-	res = makeWebhookResult(req)
+	#res = makeWebhookResult(req)
+	res = q.enqueue(makeWebhookResult, req)
 
 	res = json.dumps(res, indent=4)
 	print(res)
@@ -37,7 +42,7 @@ def makeWebhookResult(req):
 	#login_response = json.load(html)
 	#request_key = login_response['profiles'][0]['request_key']
 	#domain = login_response['profiles'][0]['profile_type']
-	request_key = 'c49e6eed6b3dcc8130c55c5b3b1ea2dd'
+	request_key = 'da95004146d09e0fbbf51e4626359201'
 	domain = 'Dental'
 	
 	speech = ""
