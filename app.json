@@ -1,7 +1,7 @@
 {
   "name": "API.AI Dental Webhook",
   "description": "API.AI Dental Webhook Sapmple",
-  "repository": "https://github.com/NishaNarayanaswamy/dental",
+  "repository": "https://github.com/NishaNarayanaswamy/dental-orig",
   "logo": "http://xvir.github.io/img/apiai.png",
   "keywords": ["api.ai", "natural language"],
   "buildpacks": [
