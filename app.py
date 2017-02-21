@@ -11,11 +11,6 @@ from flask import Flask
 from flask import request
 from flask import make_response
 
-from rq import Queue
-from worker import conn
-
-q = Queue(connection=conn)
-
 # start app in global layout
 app = Flask(__name__)
 
@@ -46,10 +41,7 @@ def makeWebhookResult(req):
 	domain = 'Dental'
 	
 	speech = ""
-	if req.get("result").get("action") == 'morning_report':
-		speech = q.enqueue(testWorker)
 	
-	"""
 	# get api data
 	today = ( datetime.datetime.utcnow() - datetime.timedelta(hours = 8) ).strftime("%Y/%m/%d")
 	todayCardData = []
@@ -111,15 +103,12 @@ def makeWebhookResult(req):
 							speech = "You have "+str(count)+" appointments remaining for the day. Your next patient, " + patient_name +"... will arrive at "+first_apmnt+". Your last appointment is at " + last_apmnt.strftime("%I:%M %p")+"."
 				else:
 					speech = "You have no scheduled appointments today."
-	"""
+	
 	return {
 	 	"speech":speech,
 	 	"displayText":speech,
 	 	"source":"apiai-dental"
 	 }
-
-def testWorker():
-	return ( 'Test Worker ftn' )
 
 if __name__ == '__main__':
 	port = int(os.getenv('PORT', 5000)) # flask is on 5000
@@ -127,4 +116,3 @@ if __name__ == '__main__':
 	print "Starting app om port %d", port
 	
 	app.run(debug=True, port=port, host='0.0.0.0')
-	
