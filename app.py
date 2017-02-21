@@ -46,8 +46,8 @@ def makeWebhookResult(req):
 	domain = 'Dental'
 	
 	speech = ""
-
-	speech = q.enqueue(testWorker)
+	if req.get("result").get("action") == 'morning_report':
+		speech = q.enqueue(testWorker)
 	
 	"""
 	# get api data
