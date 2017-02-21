@@ -29,12 +29,13 @@ def webhook():
 	#res = makeWebhookResult(req)
 
 	res = q.enqueue(makeWebhookResult, req)
-
-	res = json.dumps(res, indent=4)
-	print(res)
-	r = make_response(res)
-	r.headers['Content-Type'] = 'application/json'
-	return r
+	
+	if res:
+		res = json.dumps(res, indent=4)
+		print(res)
+		r = make_response(res)
+		r.headers['Content-Type'] = 'application/json'
+		return r
 
 
 if __name__ == '__main__':
