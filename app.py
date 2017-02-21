@@ -18,13 +18,13 @@ app = Flask(__name__)
 def webhook():
 	req = request.get_json(silent=True, force=True)
 
-	#print('Request:')
-	#print(json.dumps(req, indent=4))
+	print('Request:')
+	print(json.dumps(req, indent=4))
 
 	res = makeWebhookResult(req)
 
 	res = json.dumps(res, indent=4)
-	#print(res)
+	print(res)
 	r = make_response(res)
 	r.headers['Content-Type'] = 'application/json'
 	return r
@@ -48,6 +48,7 @@ def makeWebhookResult(req):
 	monthCardData = []
 	if(request_key):
 		if req.get("result").get("action") == 'morning_report':
+			print 'here'
 			url2  = 'https://api.sikkasoft.com/v2/sikkanet_cards/Morning%20Report?request_key='+request_key+'&startdate='+today+'&enddate='+today
 			html2 = urlopen(url2)
         		response = json.load(html2)
@@ -65,6 +66,7 @@ def makeWebhookResult(req):
 					speech = 'Your current month to date morning report is as follows...'+'\n' + ". \n".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in monthCardData] )
 				
 		elif req.get("result").get("action") == 'appointments':
+			print 'here2'
 			url3  = 'https://api.sikkasoft.com/v2/appointments?request_key='+request_key+'&startdate='+today+'&enddate='+today+'&sort_order=asc&sort_by=appointment_time&fields=patient_name,time,type,guarantor_name,length'
 			html3 = urlopen(url3)
         		response = json.load(html3)
