@@ -18,13 +18,13 @@ app = Flask(__name__)
 def webhook():
 	req = request.get_json(silent=True, force=True)
 
-	print('Request:')
-	print(json.dumps(req, indent=4))
+	#print('Request:')
+	#print(json.dumps(req, indent=4))
 
 	res = makeWebhookResult(req)
 
 	res = json.dumps(res, indent=4)
-	print(res)
+	#print(res)
 	r = make_response(res)
 	r.headers['Content-Type'] = 'application/json'
 	return r
@@ -58,9 +58,9 @@ def makeWebhookResult(req):
 					if valType == "$":
 						val=int(math.ceil(val))
 					if 'month' in colName.lower():
-						monthCardData.append([colName.strip().capitalize(), valType, val])
+						monthCardData.append([colName, valType, val])
 					else:
-						todayCardData.append([colName.strip().capitalize(), valType, val])
+						todayCardData.append([colName, valType, val])
 				if monthCardData:
 					speech = 'Your current month to date morning report is as follows...'+'\n' + ". \n".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in monthCardData] )
 				
