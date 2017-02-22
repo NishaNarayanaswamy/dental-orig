@@ -74,7 +74,30 @@ def makeWebhookResult(req):
 						colName = re.sub( r'todays', '', colName, flags=re.I )
 						todayCardData.append([colName.strip().capitalize(), valType, val])
 				if todayCardData:
-					speech = 'Todays morning report is as follows...'+'\n' + ". \n".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in monthCardData] )
+					speech = 'Todays morning report is as follows...'+'\n' + ". \n".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in todayCardData] )
+		
+		elif req.get("result").get("action") == 'morning_report_continue':
+			
+			morning_report_json = '{"KPIData": [{"Value": [{"avg": 17603.938181818183, "Regionalavg": "$17,604", "ColName": "Scheduled Production", "value": 2535, "total": 193643.32, "RegionalTotal": "$193,643", "RegionalValue": "$2,535"}, {"avg": 17603.938181818183, "Regionalavg": "$17,604", "ColName": "Sch Production for Rest of month", "value": 24806, "total": 193643.32, "RegionalTotal": "$193,643", "RegionalValue": "$24,806"}, {"avg": 17603.938181818183, "Regionalavg": "17,604", "ColName": "Month to date New Patients", "value": 27, "total": 193643.32, "RegionalTotal": "193,643", "RegionalValue": "27"}, {"avg": 17603.938181818183, "Regionalavg": "17,604", "ColName": "Month to date patients seen", "value": 333, "total": 193643.32, "RegionalTotal": "193,643", "RegionalValue": "333"}, {"avg": 17603.938181818183, "Regionalavg": "$17,604", "ColName": "Month to date collection", "value": 72440.32, "total": 193643.32, "RegionalTotal": "$193,643", "RegionalValue": "$72,440"}, {"avg": 17603.938181818183, "Regionalavg": "17,604", "ColName": "todays new patients", "value": 0, "total": 193643.32, "RegionalTotal": "193,643", "RegionalValue": "0"}, {"avg": 17603.938181818183, "Regionalavg": "$17,604", "ColName": "month to date production", "value": 93475, "total": 193643.32, "RegionalTotal": "$193,643", "RegionalValue": "$93,475"}, {"avg": 17603.938181818183, "Regionalavg": "17,604", "ColName": "Todays patients going inactive", "value": 2, "total": 193643.32, "RegionalTotal": "193,643", "RegionalValue": "2"}, {"avg": 17603.938181818183, "Regionalavg": "17,604", "ColName": "todays patient pending treatment plan", "value": 4, "total": 193643.32, "RegionalTotal": "193,643", "RegionalValue": "4"}, {"avg": 17603.938181818183, "Regionalavg": "17,604", "ColName": "Scheduled Appointment", "value": 15, "total": 193643.32, "RegionalTotal": "193,643", "RegionalValue": "15"}, {"avg": 17603.938181818183, "Regionalavg": "17,604", "ColName": "todays patient pending balance", "value": 6, "total": 193643.32, "RegionalTotal": "193,643", "RegionalValue": "6"}], "Key": "Actual"}], "KPIInfo": {"KPIName": "Morning Report", "ChartType": ["$", "$", "#", "#", "$", "#", "$", "#", "#", "#", "#"], "InitialTabs": "", "KPIType": ["Column"]}}'
+			response = json.loads(morning_report_json)			
+			if(response['KPIData']):
+				for idx, record in enumerate(response['KPIData'][0]['Value']):
+					colName, valType, val = record['ColName'] , response['KPIInfo']['ChartType'][idx] , record['value']
+					colName = re.sub(r'# of|#', 'Number of', colName) if '#' in colName else colName
+					colName = re.sub(r'Sch ', 'Scheduled ', colName) if 'Sch' in colName else colName
+					colName = re.sub(r'patient ', 'patients ', colName, re.I)
+					colName = re.sub(r'appointment ', 'appointments ', colName, re.I)					
+					valType = re.sub('#', '', valType) if '#' in valType else valType
+					if valType == "$":
+						val=int(math.ceil(val))
+					if 'month' in colName.lower():
+						colName = re.sub( r'month to date', '', colName, flags=re.I )
+						monthCardData.append([colName.strip().capitalize(), valType, val])
+					else:
+						colName = re.sub( r'todays', '', colName, flags=re.I )
+						todayCardData.append([colName.strip().capitalize(), valType, val])
+				if monthCardData:
+					speech = 'Your month to date practice metrics are as follows...'+'\n' + ". \n".join( [str(colName) + " is " + str(valType) + str(val)  for colName, valType, val in monthCardData] )
 
 				
 		elif req.get("result").get("action") == 'appointments':
