@@ -148,7 +148,7 @@ def makeWebhookResult(req):
 					speech = "You have no scheduled appointments today."
 					
 		elif req.get("result").get("action") == 'inventory':
-			speech = "Based on your scheduled appointments, you will require some additional supplies, totaling $100. ...Would you like to hear the list of supplies required?"
+			speech = "Based on your scheduled appointments, you will require some additional supplies, totaling $50. Would you like to hear the list of supplies required?"
 		
 		elif req.get("result").get("action") == 'no_inventory':
 			speech = "Ok. Good-bye!"
