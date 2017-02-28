@@ -143,7 +143,7 @@ def makeWebhookResult(req):
 							speech = "You have "+str(count)+" appointments remaining for the day. Your next patient, " + patient_name +"... will arrive at "+first_apmnt+". Your last appointment is at " + last_apmnt.strftime("%I:%M %p")+"."
 				else:
 					speech = "You have no scheduled appointments today."
-					
+		
 		elif req.get("result").get("action") == 'inventory':
 			speech = "Based on your scheduled appointments, you will require some additional supplies, totaling $50. Would you like to hear the list of supplies required?"
 			
