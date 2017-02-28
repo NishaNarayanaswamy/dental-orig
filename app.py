@@ -144,20 +144,20 @@ def makeWebhookResult(req):
 				else:
 					speech = "You have no scheduled appointments today."
 					
-		elif req.get("result").get("action") == 'inventory':
-			speech = "Based on your scheduled appointments, you will require some additional supplies, totaling $50. Would you like to hear the list of supplies required?"
+		#elif req.get("result").get("action") == 'inventory':
+			#speech = "Based on your scheduled appointments, you will require some additional supplies, totaling $50. Would you like to hear the list of supplies required?"
 			
-		elif req.get("result").get("action") == 'read_first_item':
-			speech = "Kirkland Signature Nitrile Exam Glove Medium, 2 Pack, 200 Count, totaling $20. Would you like to order this item?"
+		#elif req.get("result").get("action") == 'read_first_item':
+			#speech = "Kirkland Signature Nitrile Exam Glove Medium, 2 Pack, 200 Count, totaling $20. Would you like to order this item?"
 		
-		elif req.get("result").get("action") == 'confirm_item':
-			speech = "Item has been placed. Would you like to continue?"
+		#elif req.get("result").get("action") == 'confirm_item':
+			#speech = "Item has been placed. Would you like to continue?"
 		
-		elif req.get("result").get("action") == 'read_next_item':
-			speech = "Walgreens Dental Mirror, Pick & Scaler Kit, 5 count, totaling $30. Would you like to order this item?"
+		#elif req.get("result").get("action") == 'read_next_item':
+			#speech = "Walgreens Dental Mirror, Pick & Scaler Kit, 5 count, totaling $30. Would you like to order this item?"
 			
-		elif req.get("result").get("action") == 'invoice':
-			speech = "Item has been placed. An invoice of $50 has been emailed to you from Google Express."	
+		#elif req.get("result").get("action") == 'invoice':
+			#speech = "Item has been placed. An invoice of $50 has been emailed to you from Google Express."	
 
 	return {
 	 	"speech":speech,
