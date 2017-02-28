@@ -18,13 +18,13 @@ app = Flask(__name__)
 def webhook():
 	req = request.get_json(silent=True, force=True)
 
-	print('Request:')
-	print(json.dumps(req, indent=4))
+	#print('Request:')
+	#print(json.dumps(req, indent=4))
 
 	res = makeWebhookResult(req)
 
 	res = json.dumps(res, indent=4)
-	print(res)
+	#print(res)
 	r = make_response(res)
 	r.headers['Content-Type'] = 'application/json'
 	return r
@@ -38,8 +38,7 @@ def makeWebhookResult(req):
 	#request_key = login_response['profiles'][0]['request_key']
 	#domain = login_response['profiles'][0]['profile_type']
 	request_key = 'cf457ff56d7ae949f6b28b8d5faf770b'
-	domain = 'Dental'
-	
+	domain = 'Dental'	
 	speech = ""
 	
 	# get api data
@@ -102,8 +101,6 @@ def makeWebhookResult(req):
 
 				
 		elif req.get("result").get("action") == 'appointments':
-			speech = "AP reporting"
-
 			#url3  = 'https://api.sikkasoft.com/v2/appointments?request_key='+request_key+'&startdate='+today+'&enddate='+today+'&sort_order=asc&sort_by=appointment_time&fields=patient_name,time,type,guarantor_name,length'
 			#html3 = urlopen(url3)
         		#response = json.load(html3)
@@ -149,9 +146,6 @@ def makeWebhookResult(req):
 					
 		elif req.get("result").get("action") == 'inventory':
 			speech = "Based on your scheduled appointments, you will require some additional supplies, totaling $50. Would you like to hear the list of supplies required?"
-		
-		elif req.get("result").get("action") == 'no_inventory':
-			speech = "Ok. Good-bye!"
 			
 		elif req.get("result").get("action") == 'read_first_item':
 			speech = "Kirkland Signature Nitrile Exam Glove Medium, 2 Pack, 200 Count, totaling $20. Would you like to order this item?"
