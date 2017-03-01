@@ -157,7 +157,7 @@ def makeWebhookResult(req):
 			speech = "Walgreens Dental Mirror, Pick & Scaler Kit, 5 count, totaling $30. Would you like to order this item?"
 			
 		elif req.get("result").get("action") == 'invoice':
-			speech = "Item has been placed. An invoice of $50 has been emailed to you from Google Express."	
+			speech = "An invoice of $50 has been emailed to you from Google Express, and estimated delivery is 4:00 pm today. "	
 
 	return {
 	 	"speech":speech,
